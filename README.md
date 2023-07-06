@@ -7,3 +7,11 @@
 3. Перейти в APIs & Services -> Credentials -> Create credentials -> Service account
 4. В настройках аккаунта получить ключ
 5. Добавить почту сервисного аккаунта в таблицу
+
+### Использование
+
+https://docs.google.com/spreadsheets/d/<<SPREADSHEET_KEY>>/edit#gid=1504504767
+
+```
+gs = GoogleSheet('<<SPREADSHEET_KEY>>')
+```
