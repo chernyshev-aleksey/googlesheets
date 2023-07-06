@@ -2,5 +2,5 @@
 
 ### Создание сервисного аккаунта
 
-1. Выбрать или создать проект (тут)[https://console.cloud.google.com/welcome]
+1. Выбрать или создать проект [тут](https://console.cloud.google.com/welcome)
 2. 
