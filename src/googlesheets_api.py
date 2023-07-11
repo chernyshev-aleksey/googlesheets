@@ -1,5 +1,3 @@
-import httplib2
-from bson import json_util
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from oauth2client.service_account import ServiceAccountCredentials
@@ -15,7 +13,7 @@ class GoogleSheet:
         self.sheet_id = sheet_id
         self.db = DataBaseGoogleSheet(config)
         creds_service = ServiceAccountCredentials.from_json_keyfile_dict(
-            self.db.get_credential(config.NAME_PROJECT), self.scopes)
+            self.db.get_credential(config.NAME_CERVICES_ACCOUNT), self.scopes)
         self.service = build('sheets', 'v4', credentials=creds_service)
         self.sheets = self.service.spreadsheets()
 

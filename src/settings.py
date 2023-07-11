@@ -10,7 +10,7 @@ class Config(BaseModel):
 	DB_PASSWORD: str
 	DB_NAME: str
 	GOOGLESHEETS_ID: str
-	NAME_PROJECT: str
+	NAME_CERVICES_ACCOUNT: str
 	CA_FILE: str
 	DB_COL_NAME: str
 
