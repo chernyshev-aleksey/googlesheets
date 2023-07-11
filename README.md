@@ -17,5 +17,4 @@ from src.settings import config
 
 
 gs = GoogleSheet(config.GOOGLESHEETS_ID).get_values_by_range('<Имя листа>!<Ячейки таблицы>')
-
 ```
