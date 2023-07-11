@@ -4,3 +4,5 @@
 /creds
 
 .env.local
+
+logs/
