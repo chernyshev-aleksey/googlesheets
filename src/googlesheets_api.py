@@ -1,27 +1,29 @@
-import os
-
 import httplib2
+from bson import json_util
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from oauth2client.service_account import ServiceAccountCredentials
 
+from src.database.google import DataBaseGoogleSheet
+from src.settings import config
+
 
 class GoogleSheet:
     scopes = ['https://www.googleapis.com/auth/spreadsheets']
-    creds_json = os.path.dirname(os.path.abspath(__file__)) + "/creds/key.json"
 
     def __init__(self, sheet_id):
         self.sheet_id = sheet_id
-        creds_service = ServiceAccountCredentials.from_json_keyfile_name(
-            self.creds_json, self.scopes).authorize(httplib2.Http())
-        self.service = build('sheets', 'v4', http=creds_service)
+        self.db = DataBaseGoogleSheet(config)
+        creds_service = ServiceAccountCredentials.from_json_keyfile_dict(
+            self.db.get_credential(config.NAME_PROJECT), self.scopes)
+        self.service = build('sheets', 'v4', credentials=creds_service)
+        self.sheets = self.service.spreadsheets()
 
-    def get(self, _range: str) -> list[list[str]]:
-        return self.service.spreadsheets().values().get(
-                spreadsheetId=self.sheet_id, range=_range).execute()['values']
+    def get_values_by_range(self, _range: str) -> list[list[str]]:
+        return self.sheets.values().get(spreadsheetId=self.sheet_id, range=_range).execute()['values']
 
     def add_rows(self, _range, values: list[list[str]]):
-        self.service.spreadsheets().values().update(
+        self.sheets.values().update(
             spreadsheetId=self.sheet_id,
             valueInputOption='USER_ENTERED',
             range=_range,
@@ -46,7 +48,7 @@ class GoogleSheet:
         }
 
         try:
-            self.service.spreadsheets().batchUpdate(
+            self.sheets.batchUpdate(
                 spreadsheetId=self.sheet_id,
                 body=body
             ).execute()
